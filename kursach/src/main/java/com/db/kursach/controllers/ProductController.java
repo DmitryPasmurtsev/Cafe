@@ -1,18 +1,11 @@
 package com.db.kursach.controllers;
 
-import com.db.kursach.models.Employee;
-import com.db.kursach.models.Order;
 import com.db.kursach.models.Product;
-import com.db.kursach.repositories.ProductRepository;
 import com.db.kursach.services.ProductService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.db.kursach.services.impl.ProductServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,8 +18,8 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> products(@RequestParam(name = "productName",required = false) String productName){
-        List<Product> productsItems = productService.listProducts(productName);
+    public ResponseEntity<List<Product>> products(){
+        List<Product> productsItems = productService.listProducts();
         return ResponseEntity.ok(productsItems);
     }
     @GetMapping("/products/{id}")

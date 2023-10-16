@@ -3,19 +3,13 @@ package com.db.kursach.controllers;
 
 
 import com.db.kursach.models.Order;
-import com.db.kursach.models.OrderComposition;
-import com.db.kursach.models.OrderCompositionKey;
 import com.db.kursach.models.requestModels.OrderRequestModel;
-import com.db.kursach.services.AuthService;
-import com.db.kursach.services.EmployeeService;
 import com.db.kursach.services.OrderService;
-import com.db.kursach.services.ProductService;
-import lombok.AllArgsConstructor;
+import com.db.kursach.services.impl.AuthServiceImpl;
+import com.db.kursach.services.impl.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -28,7 +22,7 @@ import java.util.*;
 public class OrderController {
 
     private final OrderService orderService;
-    private final AuthService authService;
+    private final AuthServiceImpl authService;
 
     @GetMapping("/orders")
     public ResponseEntity<List<Order>> orders(){

@@ -1,12 +1,10 @@
 package com.db.kursach.controllers;
-import com.db.kursach.models.Product;
 import com.db.kursach.models.Supplier;
 import com.db.kursach.services.SupplierService;
+import com.db.kursach.services.impl.SupplierServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +17,8 @@ public class SupplierController {
     private final SupplierService supplierService;
 
     @GetMapping("/suppliers")
-    public ResponseEntity<List<Supplier>> suppliers(@RequestParam(name = "companyName",required = false) String companyName) {
-         List<Supplier> suppliers =  supplierService.listSuppliers(companyName);
+    public ResponseEntity<List<Supplier>> suppliers() {
+         List<Supplier> suppliers =  supplierService.listSuppliers();
         return ResponseEntity.ok(suppliers);
     }
 
@@ -43,7 +41,6 @@ public class SupplierController {
     @PutMapping("/suppliers/{id}")
     public ResponseEntity<String> editSupplier(@PathVariable Long id, @RequestBody Supplier supplier) {
         supplierService.editSupplier(id,supplier);
-        System.err.println(supplier.getName());
         return ResponseEntity.ok("Изменен поставщик " + id);
     }
 

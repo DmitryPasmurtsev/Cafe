@@ -2,14 +2,12 @@ package com.db.kursach.controllers;
 
 import com.db.kursach.models.Employee;
 import com.db.kursach.models.Position;
-import com.db.kursach.models.Product;
 import com.db.kursach.services.EmployeeService;
+import com.db.kursach.services.impl.EmployeeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,8 +24,8 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> employees(@RequestParam(name = "fullName",required = false) String fullName){
-        List<Employee> employees = employeeService.listEmployees(null);
+    public ResponseEntity<List<Employee>> employees(){
+        List<Employee> employees = employeeService.listEmployees();
         return ResponseEntity.ok(employees);
     }
     @GetMapping("/positions")
@@ -41,7 +39,7 @@ public class EmployeeController {
         employeeService.saveEmployee(employee);
         return ResponseEntity.ok("Добавлен работник " + employee.getFullName());
     }
-    @PostMapping("/employee/{id}/trash")
+    @PostMapping("/employee/{id}/trash") //переименовать
     public String createImage(@RequestParam("file") MultipartFile file,@PathVariable Long id)throws IOException{
         employeeService.saveImage(file,id);
         return "redirect:/employee/{id}";

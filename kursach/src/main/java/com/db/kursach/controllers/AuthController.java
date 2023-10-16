@@ -3,8 +3,8 @@ package com.db.kursach.controllers;
 import com.db.kursach.dto.AuthRequest;
 import com.db.kursach.dto.AuthResponse;
 import com.db.kursach.dto.RegisterRequest;
-import com.db.kursach.services.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.db.kursach.services.impl.AuthServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin
+@RequiredArgsConstructor
 public class AuthController {
 
 
-    @Autowired
-    private AuthService authService;
+    private final AuthServiceImpl authService;
 
     @PostMapping("/registration")
     public ResponseEntity<String> registration(

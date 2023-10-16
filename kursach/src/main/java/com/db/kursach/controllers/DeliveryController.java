@@ -1,15 +1,10 @@
 package com.db.kursach.controllers;
 import com.db.kursach.models.Delivery;
-import com.db.kursach.models.Product;
 import com.db.kursach.services.DeliveryService;
-import com.db.kursach.services.EmployeeService;
-import com.db.kursach.services.ProductService;
-import com.db.kursach.services.SupplierService;
+import com.db.kursach.services.impl.DeliveryServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -36,7 +31,6 @@ public class DeliveryController {
     }
     @PostMapping("/deliveries")
     public ResponseEntity<String> createDelivery(@RequestBody Delivery delivery){
-        System.err.println("aoaoa");
         deliveryService.saveDelivery(delivery);
         return ResponseEntity.ok("Добавлена поставка на " + delivery.getDate());
     }

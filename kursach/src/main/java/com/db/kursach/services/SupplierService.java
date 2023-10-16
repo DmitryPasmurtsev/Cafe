@@ -1,38 +1,17 @@
 package com.db.kursach.services;
+
 import com.db.kursach.models.Supplier;
-import com.db.kursach.repositories.SupplierRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
-@Service
-@Slf4j
-@RequiredArgsConstructor
 
-public class SupplierService {
-    private final SupplierRepository supplierRepository;
+public interface SupplierService {
+    List<Supplier> listSuppliers();
 
-    public List<Supplier> listSuppliers(String companyName){
-        if(companyName!=null) return supplierRepository.findByNameContaining(companyName);
-        return supplierRepository.findAll();
-    }
-    public Supplier getSupplierById(Long id) {
-        return supplierRepository.findById(id).orElse(null);
-    }
-    public void saveSupplier(Supplier supplier) {
-        supplierRepository.save(supplier);
-    }
-    public void deleteSupplier(Long id){
-        supplierRepository.deleteById(id);
-    }
-    public void editSupplier(Long id, Supplier supplier){
-        Supplier supplier1=supplierRepository.findById(id).orElseThrow();
-        supplier1.setPhone(supplier.getPhone());
-        supplier1.setCity(supplier.getCity());
-        supplier1.setCountry(supplier.getCountry());
-        supplier1.setAddress(supplier.getAddress());
-        supplier1.setName(supplier.getName());
-        supplierRepository.save(supplierRepository.findById(id).orElse(null));
-    }
+    Supplier getSupplierById(Long id);
+
+    void saveSupplier(Supplier supplier);
+
+    void deleteSupplier(Long id);
+
+    void editSupplier(Long id, Supplier supplier);
 }

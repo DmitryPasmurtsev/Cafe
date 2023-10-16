@@ -1,4 +1,4 @@
-package com.db.kursach.services;
+package com.db.kursach.services.impl;
 
 import com.db.kursach.dto.AuthRequest;
 import com.db.kursach.dto.AuthResponse;
@@ -19,7 +19,7 @@ import java.security.Principal;
 
 @Service
 @AllArgsConstructor
-public class AuthService {
+public class AuthServiceImpl {
     private final UserRepository userRepository;
     private final EmployeeRepository employeeRepository;
     private final PasswordEncoder passwordEncoder;
@@ -41,12 +41,11 @@ public class AuthService {
     }
 
     public User setUserRole(Employee employee, User user) {
-        switch (Math.toIntExact(employee.getPosition1().getId())){
-            case 1: user.setRole(Role.ROLE_DIRECTOR); break;
-            case 2,6: user.setRole(Role.ROLE_ADMINISTRATOR); break;
-            case 3,4,7: user.setRole(Role.ROLE_WAITER); break;
-            case 5: user.setRole(Role.ROLE_ACCOUNTANT); break;
-            default: user.setRole(Role.ROLE_WAITER); break;
+        switch (Math.toIntExact(employee.getPosition1().getId())) {
+            case 1 -> user.setRole(Role.ROLE_DIRECTOR);
+            case 2, 6 -> user.setRole(Role.ROLE_ADMINISTRATOR);
+            case 5 -> user.setRole(Role.ROLE_ACCOUNTANT);
+            default -> user.setRole(Role.ROLE_WAITER);
         }
         return user;
     }
