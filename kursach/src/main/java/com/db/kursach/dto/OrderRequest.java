@@ -1,11 +1,14 @@
-package com.db.kursach.models.requestModels;
+package com.db.kursach.dto;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
-public class OrderRequestModel {
+@Getter
+@Setter
+public class OrderRequest {
     private List<String> productsNames;
     private List<Integer> amounts;
     private String description;

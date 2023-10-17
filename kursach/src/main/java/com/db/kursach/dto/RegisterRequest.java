@@ -1,19 +1,13 @@
 package com.db.kursach.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 public class RegisterRequest {
-
     private String login;
-
     private String email;
-
     private String password;
 }

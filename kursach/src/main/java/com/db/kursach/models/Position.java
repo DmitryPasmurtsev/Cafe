@@ -22,7 +22,7 @@ public class Position {
     @Column(name = "position_name")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "position1")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "position")
     @JsonIgnore
     private List<Employee> employees;
 }

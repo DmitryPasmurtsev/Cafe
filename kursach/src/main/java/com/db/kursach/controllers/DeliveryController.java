@@ -1,36 +1,42 @@
 package com.db.kursach.controllers;
+import com.db.kursach.dto.DeliveryDTO;
 import com.db.kursach.models.Delivery;
 import com.db.kursach.services.DeliveryService;
-import com.db.kursach.services.impl.DeliveryServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
 @CrossOrigin
 public class DeliveryController {
     private final DeliveryService deliveryService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/deliveries")
-    public ResponseEntity<List<Delivery>> deliveries(){
+    public ResponseEntity<List<DeliveryDTO>> deliveries(){
         List<Delivery> deliveries = deliveryService.listDeliveries();
         deliveries.sort(Comparator.comparing(Delivery::getDate).reversed());
-        return ResponseEntity.ok(deliveries);
+        List<DeliveryDTO> deliveryDTO=deliveries.stream()
+                .map(delivery -> modelMapper.map(delivery, DeliveryDTO.class))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(deliveryDTO);
     }
 
     @GetMapping("/deliveries/{id}")
-    public ResponseEntity<Delivery> deliveryInfo(@PathVariable Long id) {
-        Delivery delivery = deliveryService.getDeliveryById(id);
+    public ResponseEntity<DeliveryDTO> deliveryInfo(@PathVariable Long id) {
+        DeliveryDTO delivery = modelMapper.map(deliveryService.getDeliveryById(id), DeliveryDTO.class);
         return ResponseEntity.ok(delivery);
     }
     @PostMapping("/deliveries")
-    public ResponseEntity<String> createDelivery(@RequestBody Delivery delivery){
+    public ResponseEntity<String> createDelivery(@RequestBody DeliveryDTO deliveryDTO){
+        Delivery delivery=modelMapper.map(deliveryDTO, Delivery.class);
         deliveryService.saveDelivery(delivery);
         return ResponseEntity.ok("Добавлена поставка на " + delivery.getDate());
     }
@@ -40,8 +46,9 @@ public class DeliveryController {
         return ResponseEntity.ok("Удалена поставка с id " + id);
     }
     @PutMapping("/deliveries/{id}")
-    public ResponseEntity<String> editDelivery(@PathVariable Long id, @RequestBody Delivery updatedDelivery)
+    public ResponseEntity<String> editDelivery(@PathVariable Long id, @RequestBody DeliveryDTO deliveryDTO)
     {
+        Delivery updatedDelivery=modelMapper.map(deliveryDTO, Delivery.class);
         deliveryService.editDelivery(id,updatedDelivery);
         return ResponseEntity.ok("Изменена поставка с id " + id);
     }

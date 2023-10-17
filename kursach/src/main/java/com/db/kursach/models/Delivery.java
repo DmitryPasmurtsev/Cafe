@@ -40,6 +40,4 @@ public class Delivery {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @JsonIgnore
-    public String toStringAmount(){return amount.toString();}
 }

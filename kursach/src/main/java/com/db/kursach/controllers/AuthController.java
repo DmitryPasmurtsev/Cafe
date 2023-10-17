@@ -20,7 +20,7 @@
 //    private final AuthServiceImpl authService;
 //
 //    @PostMapping("/registration")
-//    public ResponseEntity<String> registration(@RequestBody RegisterRequest request) {
+//    public ResponseEntity<String> registration(@RequestBody RegisterRequest request) { 
 //        if (!authService.registration(request)) {
 //            return new ResponseEntity<>("Ошибка регистрации пользователя с email: " + request.getEmail(),
 //                    HttpStatus.INTERNAL_SERVER_ERROR);

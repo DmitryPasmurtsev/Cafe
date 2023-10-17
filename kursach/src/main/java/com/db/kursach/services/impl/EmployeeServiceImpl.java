@@ -57,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeToEdit.setExperience(employee.getExperience());
         employeeToEdit.setFullName(employee.getFullName());
         employeeToEdit.setPhone(employee.getPhone());
-        employeeToEdit.setPosition1(employee.getPosition1());
+        employeeToEdit.setPosition(employee.getPosition());
         employeeToEdit.setEmail(employee.getEmail());
        // employeeToEdit.getUser().setEmail(employee.getEmail());
         employeeToEdit.setSalary(employee.getSalary());

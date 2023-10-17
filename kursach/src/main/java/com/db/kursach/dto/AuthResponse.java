@@ -1,16 +1,12 @@
 package com.db.kursach.dto;
 
 //import com.db.kursach.models.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class AuthResponse {
     private String token;
-    //private User user;
+    //private User user; если ты закомментил это для авторизации то надо поменять на дто
 }

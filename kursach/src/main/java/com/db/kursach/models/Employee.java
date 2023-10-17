@@ -82,13 +82,12 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "position_id")
-    private Position position1;
+    private Position position;
 
 //    @OneToOne(mappedBy = "employee")
 //    @JsonIgnore
 //    private User user;
-    @JsonIgnore
-    public String toStringSalary(){return salary.toString();}
+
 
 
 }

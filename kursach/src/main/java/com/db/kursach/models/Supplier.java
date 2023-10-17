@@ -32,7 +32,7 @@ public class Supplier {
     @Column(name = "supplier_phone_number")
     private String phone;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "supplier")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
     @JsonIgnore
     private List<Delivery> deliveries;
 
