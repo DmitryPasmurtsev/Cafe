@@ -20,12 +20,9 @@ public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(
-            @RequestBody RegisterRequest request
-    ) {
+    public ResponseEntity<String> registration(@RequestBody RegisterRequest request) {
         if (!authService.registration(request)) {
-            return new ResponseEntity<>(
-                    "Ошибка регистрации пользователя с email: " + request.getEmail(),
+            return new ResponseEntity<>("Ошибка регистрации пользователя с email: " + request.getEmail(),
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(
@@ -33,16 +30,12 @@ public class AuthController {
                 HttpStatus.OK);
     }
     @PostMapping("/login")
-    public ResponseEntity<?> authentication(
-            @RequestBody AuthRequest request
-    ) {
+    public ResponseEntity<?> authentication(@RequestBody AuthRequest request) {
         try {
         AuthResponse authResponse = authService.authentication(request);
         return ResponseEntity.ok(authResponse);
-    } catch (BadCredentialsException ex) {
-        return new ResponseEntity<>(
-                "Неверный логин или пароль",
-                HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+        } catch (BadCredentialsException ex) {
+        return new ResponseEntity<>("Неверный логин или пароль", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
