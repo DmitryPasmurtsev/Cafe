@@ -2,6 +2,7 @@ package com.db.kursach.services.impl;
 
 
 
+import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.*;
 import com.db.kursach.repositories.OrderCompRepository;
 import com.db.kursach.repositories.OrderRepository;
@@ -26,7 +27,9 @@ public class OrderServiceImpl implements OrderService {
         return orderRepository.findAll();
     }
     public Order getOrderById(Long id) {
-        return orderRepository.findById(id).orElse(null);
+        if (orderRepository.findById(id).isEmpty())
+            throw new NotFoundException("Заказ отсутствует");
+        return orderRepository.findById(id).get();
     }
     public Order addProductInOrder(Order order, Product product, Integer productAmount) {
         OrderComposition orderComposition = new OrderComposition();

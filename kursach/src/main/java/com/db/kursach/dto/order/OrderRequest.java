@@ -1,19 +1,18 @@
-package com.db.kursach.dto;
+package com.db.kursach.dto.order;
 
-import jakarta.persistence.Column;
 import lombok.AccessLevel;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ProductDTO {
-    String name;
-    Long amount;
-    Integer calories;
-    Integer unitWeight;
+public class OrderRequest {
+    List<String> productsNames;
+    List<Integer> amounts;
     String description;
-    Float price;
 }

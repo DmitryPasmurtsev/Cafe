@@ -1,5 +1,6 @@
 package com.db.kursach.services.impl;
 
+import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.Product;
 import com.db.kursach.repositories.ProductRepository;
 import com.db.kursach.services.ProductService;
@@ -17,7 +18,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findAll();
     }
     public Product getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        if (productRepository.findById(id).isEmpty())
+            throw new NotFoundException("Продукт отсутствует");
+        return productRepository.findById(id).get();
     }
     public Product getProductByName(String productName) {return productRepository.getProductByName(productName);}
 
@@ -28,7 +31,9 @@ public class ProductServiceImpl implements ProductService {
         productRepository.deleteById(id);
     }
     public void editProduct(Long id,Product product){
-        Product productToEdit=productRepository.findById(id).orElseThrow();
+        if (productRepository.findById(id).isEmpty())
+            throw new NotFoundException("Продукт отсутствует");
+        Product productToEdit=productRepository.findById(id).get();
         editingProduct(product,productToEdit);
         productRepository.save(productToEdit);
     }

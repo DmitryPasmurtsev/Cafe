@@ -1,20 +1,17 @@
-package com.db.kursach.exceptions;
+package com.db.kursach.dto.exception;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
-import java.time.LocalDateTime;
-
+@Getter
+@Setter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Getter
 public class ExceptionResponse {
-     final String message;
-     final LocalDateTime dateTime;
-     final Throwable cause;
-     final HttpStatus status;
-
+    final HttpStatus status;
+    final String message;
 }

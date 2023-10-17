@@ -1,4 +1,5 @@
 package com.db.kursach.services.impl;
+import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.Supplier;
 import com.db.kursach.repositories.SupplierRepository;
 import com.db.kursach.services.SupplierService;
@@ -20,7 +21,9 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierRepository.findAll();
     }
     public Supplier getSupplierById(Long id) {
-        return supplierRepository.findById(id).orElse(null);
+        if (supplierRepository.findById(id).isEmpty())
+            throw new NotFoundException("Поставщик отсутствует");
+        return supplierRepository.findById(id).get();
     }
     public void saveSupplier(Supplier supplier) {
         supplierRepository.save(supplier);
@@ -29,7 +32,9 @@ public class SupplierServiceImpl implements SupplierService {
         supplierRepository.deleteById(id);
     }
     public void editSupplier(Long id, Supplier supplier){
-        Supplier supplierToEdit=supplierRepository.findById(id).orElseThrow();
+        if (supplierRepository.findById(id).isEmpty())
+            throw new NotFoundException("Поставщик отсутствует");
+        Supplier supplierToEdit=supplierRepository.findById(id).get();
         editingSupplier(supplier,supplierToEdit);
         supplierRepository.save(Objects.requireNonNull(supplierRepository.findById(id).orElse(null)));
     }

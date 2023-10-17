@@ -1,5 +1,6 @@
 package com.db.kursach.services.impl;
 
+import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.Delivery;
 import com.db.kursach.repositories.DeliveryRepository;
 import com.db.kursach.services.DeliveryService;
@@ -23,7 +24,9 @@ public class DeliveryServiceImpl implements DeliveryService {
     }
 
     public Delivery getDeliveryById(Long id) {
-        return deliveryRepository.findById(id).orElse(null);
+        if (deliveryRepository.findById(id).isEmpty())
+            throw new NotFoundException("Поставка отсутствует");
+        return deliveryRepository.findById(id).get();
     }
     public void saveDelivery(Delivery delivery) {
 
@@ -33,7 +36,9 @@ public class DeliveryServiceImpl implements DeliveryService {
         deliveryRepository.deleteById(id);
     }
     public void editDelivery(Long id, Delivery delivery){
-        Delivery deliveryToEdit=deliveryRepository.findById(id).orElseThrow();
+        if (deliveryRepository.findById(id).isEmpty())
+            throw new NotFoundException("Поставка отсутствует");
+        Delivery deliveryToEdit=deliveryRepository.findById(id).get();
         editingDelivery(delivery,deliveryToEdit);
         deliveryRepository.save(Objects.requireNonNull(deliveryRepository.findById(id).orElse(null)));
     }

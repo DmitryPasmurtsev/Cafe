@@ -2,9 +2,9 @@ package com.db.kursach.controllers;
 
 
 
-import com.db.kursach.dto.OrderResponse;
+import com.db.kursach.dto.order.OrderResponse;
 import com.db.kursach.models.Order;
-import com.db.kursach.dto.OrderRequest;
+import com.db.kursach.dto.order.OrderRequest;
 import com.db.kursach.services.OrderService;
 //import com.db.kursach.services.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;

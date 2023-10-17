@@ -1,8 +1,8 @@
 //package com.db.kursach.services.impl;
 //
-//import com.db.kursach.dto.AuthRequest;
-//import com.db.kursach.dto.AuthResponse;
-//import com.db.kursach.dto.RegisterRequest;
+//import com.db.kursach.dto.auth.AuthRequest;
+//import com.db.kursach.dto.auth.AuthResponse;
+//import com.db.kursach.dto.auth.RegisterRequest;
 //import com.db.kursach.enums.Role;
 //import com.db.kursach.jwt.JwtUtil;
 //import com.db.kursach.models.Employee;

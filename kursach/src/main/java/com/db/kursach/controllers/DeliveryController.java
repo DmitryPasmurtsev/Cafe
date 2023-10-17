@@ -52,7 +52,4 @@ public class DeliveryController {
         deliveryService.editDelivery(id,updatedDelivery);
         return ResponseEntity.ok("Изменена поставка с id " + id);
     }
-
-
-
 }

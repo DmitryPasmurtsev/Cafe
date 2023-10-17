@@ -7,16 +7,19 @@ import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 @Getter
 @Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeliveryDTO {
-    private LocalDate date;
-    private Integer amount;
-    private ProductDTO product;
-    private EmployeeDTO employee;
-    private SupplierDTO supplier;
+    LocalDate date;
+    Integer amount;
+    ProductDTO product;
+    EmployeeDTO employee;
+    SupplierDTO supplier;
 }

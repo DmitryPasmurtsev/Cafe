@@ -1,8 +1,8 @@
 //package com.db.kursach.controllers;
 //
-//import com.db.kursach.dto.AuthRequest;
-//import com.db.kursach.dto.AuthResponse;
-//import com.db.kursach.dto.RegisterRequest;
+//import com.db.kursach.dto.auth.AuthRequest;
+//import com.db.kursach.dto.auth.AuthResponse;
+//import com.db.kursach.dto.auth.RegisterRequest;
 //import com.db.kursach.services.impl.AuthServiceImpl;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@
 //    private final AuthServiceImpl authService;
 //
 //    @PostMapping("/registration")
-//    public ResponseEntity<String> registration(@RequestBody RegisterRequest request) { 
+//    public ResponseEntity<String> registration(@RequestBody RegisterRequest request) {
 //        if (!authService.registration(request)) {
 //            return new ResponseEntity<>("Ошибка регистрации пользователя с email: " + request.getEmail(),
 //                    HttpStatus.INTERNAL_SERVER_ERROR);
