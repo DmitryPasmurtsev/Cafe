@@ -1,6 +1,6 @@
 package com.db.kursach.dto;
 
-import com.db.kursach.models.User;
+//import com.db.kursach.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,5 +12,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthResponse {
     private String token;
-    private User user;
+    //private User user;
 }

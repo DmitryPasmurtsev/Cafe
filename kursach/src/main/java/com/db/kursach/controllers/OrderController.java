@@ -5,7 +5,7 @@ package com.db.kursach.controllers;
 import com.db.kursach.models.Order;
 import com.db.kursach.models.requestModels.OrderRequestModel;
 import com.db.kursach.services.OrderService;
-import com.db.kursach.services.impl.AuthServiceImpl;
+//import com.db.kursach.services.impl.AuthServiceImpl;
 import com.db.kursach.services.impl.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,7 @@ import java.util.*;
 public class OrderController {
 
     private final OrderService orderService;
-    private final AuthServiceImpl authService;
+    //private final AuthServiceImpl authService;
 
     @GetMapping("/orders")
     public ResponseEntity<List<Order>> orders(){
@@ -37,11 +37,11 @@ public class OrderController {
     }
     @PostMapping("/orders")
     public ResponseEntity<String> createOrder(@RequestBody OrderRequestModel orderRequestModel, Principal principal){
-        orderService.createOrder(orderRequestModel.getProductsNames(),
+        /*orderService.createOrder(orderRequestModel.getProductsNames(),
                 orderRequestModel.getAmounts(),
                 orderRequestModel.getDescription(),
                 authService.getUserByPrincipal(principal)
-        );
+        );*/
         return ResponseEntity.ok("Добавлен новый заказ ");
     }
 

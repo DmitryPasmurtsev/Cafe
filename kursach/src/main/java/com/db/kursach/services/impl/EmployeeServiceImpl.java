@@ -5,7 +5,7 @@ import com.db.kursach.models.Position;
 import com.db.kursach.repositories.EmployeeRepository;
 import com.db.kursach.repositories.PositionRepository;
 import com.db.kursach.services.EmployeeService;
-import com.db.kursach.services.impl.AuthServiceImpl;
+//import com.db.kursach.services.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
 
-    private final AuthServiceImpl authService;
+    //private final AuthServiceImpl authService;
 
     public List<Employee> listEmployees(){
         return employeeRepository.findAll();
@@ -48,7 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void editEmployee(Long id, Employee employee){
         Employee employeeToEdit=employeeRepository.findById(id).orElseThrow();
         editingEmployee(employee,employeeToEdit);
-        if (employeeToEdit.getUser()!=null) employeeToEdit.setUser(authService.setUserRole(employeeToEdit, employeeToEdit.getUser()));
+        //if (employeeToEdit.getUser()!=null) employeeToEdit.setUser(authService.setUserRole(employeeToEdit, employeeToEdit.getUser()));
         employeeRepository.save(Objects.requireNonNull(employeeRepository.findById(id).orElse(null)));
     }
     private void editingEmployee(Employee employee,Employee employeeToEdit){
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeToEdit.setPhone(employee.getPhone());
         employeeToEdit.setPosition1(employee.getPosition1());
         employeeToEdit.setEmail(employee.getEmail());
-        employeeToEdit.getUser().setEmail(employee.getEmail());
+       // employeeToEdit.getUser().setEmail(employee.getEmail());
         employeeToEdit.setSalary(employee.getSalary());
     }
 

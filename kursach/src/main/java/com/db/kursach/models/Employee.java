@@ -84,9 +84,9 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position1;
 
-    @OneToOne(mappedBy = "employee")
-    @JsonIgnore
-    private User user;
+//    @OneToOne(mappedBy = "employee")
+//    @JsonIgnore
+//    private User user;
     @JsonIgnore
     public String toStringSalary(){return salary.toString();}
 
