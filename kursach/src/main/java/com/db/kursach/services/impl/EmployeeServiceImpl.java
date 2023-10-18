@@ -1,5 +1,6 @@
 package com.db.kursach.services.impl;
 
+import com.db.kursach.exceptions.NotCreatedException;
 import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.Employee;
 import com.db.kursach.models.Position;
@@ -29,10 +30,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll();
     }
     public void saveEmployee(Employee employee) {
+        if(employeeRepository.findByEmail(employee.getEmail())!=null){
+            throw new NotCreatedException("Работник с такой почтой уже существует");
+        }
         employeeRepository.save(employee);
     }
     public void saveImage(MultipartFile file,Long id) throws IOException {
-        Employee employee=employeeRepository.findById(id).orElseThrow();
+        if (employeeRepository.findById(id).isEmpty())
+            throw new NotFoundException("Работник отсутствует");
+        Employee employee=employeeRepository.findById(id).get();
         if(!file.isEmpty()) {
             employee.setImage_bytes(file.getBytes());
             employeeRepository.save(employee);
