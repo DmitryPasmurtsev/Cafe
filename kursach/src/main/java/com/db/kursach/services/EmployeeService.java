@@ -14,11 +14,11 @@ public interface EmployeeService {
 
     void saveEmployee(Employee employee);
 
-    void saveImage(MultipartFile file, Long id) throws IOException;
-
     void deleteEmployee(Long id);
 
     Employee getEmployeeById(Long id);
 
     void editEmployee(Long id, Employee updatedEmployee);
+
+    void updateImage(Long id, String linkToImage);
 }
