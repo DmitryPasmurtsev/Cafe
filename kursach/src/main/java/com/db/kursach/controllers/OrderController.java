@@ -6,7 +6,7 @@ import com.db.kursach.dto.order.OrderResponse;
 import com.db.kursach.models.Order;
 import com.db.kursach.dto.order.OrderRequest;
 import com.db.kursach.services.OrderService;
-//import com.db.kursach.services.impl.AuthServiceImpl;
+import com.db.kursach.services.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class OrderController {
 
     private final OrderService orderService;
     private final ModelMapper modelMapper;
-    //private final AuthServiceImpl authService;
+    private final AuthServiceImpl authService;
 
     @GetMapping("/orders")
     public ResponseEntity<List<OrderResponse>> orders(){
@@ -37,15 +37,16 @@ public class OrderController {
     @GetMapping("/orders/{id}")
     public ResponseEntity<OrderResponse> orderInfo(@PathVariable Long id){
         OrderResponse orderDTO=modelMapper.map(orderService.getOrderById(id), OrderResponse.class);
+        System.err.println(orderDTO);
         return ResponseEntity.ok(orderDTO);
     }
     @PostMapping("/orders")
     public ResponseEntity<String> createOrder(@RequestBody OrderRequest orderRequestModel, Principal principal){
-        /*orderService.createOrder(orderRequestModel.getProductsNames(),
+        orderService.createOrder(orderRequestModel.getProductsNames(),
                 orderRequestModel.getAmounts(),
                 orderRequestModel.getDescription(),
                 authService.getUserByPrincipal(principal)
-        );*/
+        );
         return ResponseEntity.ok("Добавлен новый заказ ");
     }
 

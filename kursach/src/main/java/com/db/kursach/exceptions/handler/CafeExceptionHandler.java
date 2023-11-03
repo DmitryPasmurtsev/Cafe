@@ -35,5 +35,4 @@ public class CafeExceptionHandler {
                 );
         return new ResponseEntity<>(response,response.getStatus());
     }
-
 }

@@ -9,5 +9,6 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PositionDTO {
+    Long id;
     String name;
 }

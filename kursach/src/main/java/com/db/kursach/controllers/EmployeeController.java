@@ -1,9 +1,13 @@
 package com.db.kursach.controllers;
 
 import com.db.kursach.dto.EmployeeDTO;
+import com.db.kursach.dto.ImageDTO;
 import com.db.kursach.dto.PositionDTO;
+import com.db.kursach.dto.UserDTO;
+import com.db.kursach.dto.auth.AuthResponse;
 import com.db.kursach.models.Employee;
 import com.db.kursach.services.EmployeeService;
+import com.db.kursach.services.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.core.io.InputStreamResource;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +28,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
     private final ModelMapper modelMapper;
+    private final AuthServiceImpl authService;
 
     @GetMapping("/employees")
     public ResponseEntity<List<EmployeeDTO>> employees(){
@@ -31,6 +37,7 @@ public class EmployeeController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(employeeDTOs);
     }
+
     @GetMapping("/positions")
     public ResponseEntity<List<PositionDTO>> positions(){
         List<PositionDTO> positionDTOs=employeeService.listPositions().stream()
@@ -61,19 +68,22 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
-    @GetMapping("/employee/{id}/image")
-    private ResponseEntity<?> getEmployeeImage(@PathVariable Long id){
-        Employee employee=employeeService.getEmployeeById(id);
-        return ResponseEntity.ok()
-                .header("title",employee.getFullName())
-                .body(new InputStreamResource(new ByteArrayInputStream(employee.getImage_bytes())));
-    }
     @PutMapping("/employees/{id}")
     public ResponseEntity<String> editEmployee(@PathVariable Long id,@RequestBody EmployeeDTO employeeDTO)
     {
         Employee updatedEmployee=modelMapper.map(employeeDTO, Employee.class);
         employeeService.editEmployee(id, updatedEmployee);
         return ResponseEntity.ok("Изменен работник с id " + id);
+    }
+
+    @PutMapping("/employees/{id}/updateImage")
+    public ResponseEntity<AuthResponse> updateImage(@PathVariable Long id,@RequestBody ImageDTO linkToImage)
+    {
+        System.out.println(linkToImage);
+        employeeService.updateImage(id, linkToImage.getLinkToImage());
+        UserDTO userDTO = modelMapper.map(employeeService.getEmployeeById(id).getUser(), UserDTO.class);
+        AuthResponse response = new AuthResponse("", userDTO);
+        return ResponseEntity.ok(response);
     }
 
 }
