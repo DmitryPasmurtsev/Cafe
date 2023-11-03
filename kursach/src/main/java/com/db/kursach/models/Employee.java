@@ -46,9 +46,8 @@ public class Employee {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "employment_date")
     private LocalDate date;
-    @Lob
-    @JsonIgnore
-    private byte[] image_bytes;
+    @Column(name = "link_to_image")
+    private String linkToImage;
 //    @JsonProperty("image_bytes")
 ////    public String getPhotoBase64() throws SQLException {
 ////        // just assuming it is a jpeg. you would need to cater for different media types
@@ -71,12 +70,12 @@ public class Employee {
 //    }
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "waiter")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "waiter")
     @JsonIgnore
     private List<Order> orders;
 
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "employee")
     @JsonIgnore
     private List<Delivery> deliveries;
 
@@ -84,9 +83,9 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
-//    @OneToOne(mappedBy = "employee")
-//    @JsonIgnore
-//    private User user;
+    @OneToOne(mappedBy = "employee", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private User user;
 
 
 
