@@ -48,6 +48,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
     }
 
+    public void deleteImage(Long id){
+        /*Employee employee=getEmployeeById(id);
+        employee.setImage_bytes(null);*/
+    }
     public void deleteEmployee(Long id){
         employeeRepository.deleteById(id);
     }

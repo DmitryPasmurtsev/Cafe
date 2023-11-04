@@ -21,4 +21,5 @@ public interface EmployeeService {
     Employee getEmployeeById(Long id);
 
     void editEmployee(Long id, Employee updatedEmployee);
+    void deleteImage(Long id);
 }
