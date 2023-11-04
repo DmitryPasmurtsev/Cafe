@@ -75,11 +75,11 @@ public class EmployeeController {
         employeeService.editEmployee(id, updatedEmployee);
         return ResponseEntity.ok("Изменен работник с id " + id);
     }
-   /* @PutMapping("/{id}/image")
+    @PutMapping("/{id}/image")
     public ResponseEntity<String> deleteImage(@PathVariable Long id){
         employeeService.deleteImage(id);
         return ResponseEntity.ok("Картинка работника с id " + id+"удалена");
-    }*/
+    }
 
     @PutMapping("/{id}/updateImage")
     public ResponseEntity<AuthResponse> updateImage(@PathVariable Long id,@RequestBody ImageDTO linkToImage)

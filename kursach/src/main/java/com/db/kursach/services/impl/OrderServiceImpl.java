@@ -6,11 +6,14 @@ import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.*;
 import com.db.kursach.repositories.OrderCompRepository;
 import com.db.kursach.repositories.OrderRepository;
+import com.db.kursach.services.EmployeeService;
 import com.db.kursach.services.OrderService;
+import com.db.kursach.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -18,6 +21,8 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderCompRepository orderCompRepository;
+    private final EmployeeService employeeService;
+    private final ProductService productService;
 
     public List<Product> products(Order order){
         List<Product> products = new ArrayList<>();

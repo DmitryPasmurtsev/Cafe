@@ -37,14 +37,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(employeeRepository.findByEmail(employee.getEmail())!=null){
             throw new NotCreatedException("Работник с такой почтой уже существует");
         }
-
-
-            sendEmail(employee.getFullName(), employee.getEmail());
-        try {
-        employeeRepository.save(employee);
-        } catch (RuntimeException ex) {
-
+        if (employeeRepository.findByPhone(employee.getPhone())!=null){
+            throw new NotCreatedException("Работник с таким номером телефона уже существует");
         }
+        sendEmail(employee.getFullName(), employee.getEmail());
+        employeeRepository.save(employee);
 
     }
 
@@ -53,8 +50,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public void deleteImage(Long id){
-        /*Employee employee=getEmployeeById(id);
-        employee.setImage_bytes(null);*/
+        Employee employee=getEmployeeById(id);
+        employee.setLinkToImage(null);
     }
     public void deleteEmployee(Long id){
         employeeRepository.deleteById(id);
