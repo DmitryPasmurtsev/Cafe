@@ -7,12 +7,15 @@ import com.db.kursach.models.Position;
 import com.db.kursach.repositories.EmployeeRepository;
 import com.db.kursach.repositories.PositionRepository;
 import com.db.kursach.services.EmployeeService;
-//import com.db.kursach.services.impl.AuthServiceImpl;
+import com.db.kursach.services.MailSenderService;
+import com.db.kursach.services.impl.AuthServiceImpl;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -23,29 +26,30 @@ import java.util.Objects;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final PositionRepository positionRepository;
-
-    //private final AuthServiceImpl authService;
+    private final MailSenderService mailSenderService;
+    private final AuthServiceImpl authService;
 
     public List<Employee> listEmployees(){
         return employeeRepository.findAll();
     }
+
     public void saveEmployee(Employee employee) {
         if(employeeRepository.findByEmail(employee.getEmail())!=null){
             throw new NotCreatedException("Работник с такой почтой уже существует");
         }
-        if(employeeRepository.findByPhone(employee.getPhone())!=null){
-            throw new NotCreatedException("Работник с таким номером телефона уже существует");
-        }
+
+
+            sendEmail(employee.getFullName(), employee.getEmail());
+        try {
         employeeRepository.save(employee);
-    }
-    public void saveImage(MultipartFile file,Long id) throws IOException {
-        if (employeeRepository.findById(id).isEmpty())
-            throw new NotFoundException("Работник отсутствует");
-        Employee employee=employeeRepository.findById(id).get();
-        if(!file.isEmpty()) {
-            employee.setImage_bytes(file.getBytes());
-            employeeRepository.save(employee);
+        } catch (RuntimeException ex) {
+
         }
+
+    }
+
+    private void sendEmail(String employeeFullName, String employeeEmail) {
+        mailSenderService.sendEmail(employeeEmail, "Сообщение о принятии на работу", employeeFullName);
     }
 
     public void deleteImage(Long id){
@@ -58,27 +62,37 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Employee getEmployeeById(Long id) {
         if (employeeRepository.findById(id).isEmpty())
-            throw new NotFoundException("Работник отсутствует");
+            throw new NotFoundException("Работник с id = " +id +" отсутствует");
         return employeeRepository.findById(id).get();
     }
     public void editEmployee(Long id, Employee employee){
         if (employeeRepository.findById(id).isEmpty())
-            throw new NotFoundException("Работник отсутствует");
+            throw new NotFoundException("Работник с id = " +id +" отсутствует");
         Employee employeeToEdit=employeeRepository.findById(id).get();
         editingEmployee(employee,employeeToEdit);
         //if (employeeToEdit.getUser()!=null) employeeToEdit.setUser(authService.setUserRole(employeeToEdit, employeeToEdit.getUser()));
         employeeRepository.save(Objects.requireNonNull(employeeRepository.findById(id).orElse(null)));
     }
-    private void editingEmployee(Employee employee,Employee employeeToEdit){
-        employeeToEdit.setDate(employee.getDate());
-        employeeToEdit.setImage_bytes(employeeToEdit.getImage_bytes());
-        employeeToEdit.setExperience(employee.getExperience());
-        employeeToEdit.setFullName(employee.getFullName());
-        employeeToEdit.setPhone(employee.getPhone());
-        employeeToEdit.setPosition(employee.getPosition());
-        employeeToEdit.setEmail(employee.getEmail());
-       // employeeToEdit.getUser().setEmail(employee.getEmail());
-        employeeToEdit.setSalary(employee.getSalary());
+
+    @Override
+    public void updateImage(Long id, String linkToImage) {
+        Employee employee = getEmployeeById(id);
+        employee.setLinkToImage(linkToImage);
+        employeeRepository.save(employee);
+    }
+
+    private void editingEmployee(Employee newEmployee,Employee oldEmployee){
+        oldEmployee.setDate(newEmployee.getDate());
+        oldEmployee.setExperience(newEmployee.getExperience());
+        oldEmployee.setFullName(newEmployee.getFullName());
+        oldEmployee.setPhone(newEmployee.getPhone());
+        oldEmployee.setPosition(newEmployee.getPosition());
+        oldEmployee.setEmail(newEmployee.getEmail());
+        if (oldEmployee.getUser()!=null) {
+            oldEmployee.setUser(authService.setUserRole(oldEmployee, oldEmployee.getUser()));
+            oldEmployee.getUser().setEmail(newEmployee.getEmail());
+        }
+        oldEmployee.setSalary(newEmployee.getSalary());
     }
 
     public List<Position> listPositions() {

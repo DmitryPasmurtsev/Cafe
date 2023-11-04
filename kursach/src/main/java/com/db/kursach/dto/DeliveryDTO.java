@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DeliveryDTO {
+    Long id;
     LocalDate date;
     Integer amount;
     ProductDTO product;

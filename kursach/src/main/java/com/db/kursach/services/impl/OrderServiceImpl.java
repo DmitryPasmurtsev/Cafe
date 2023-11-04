@@ -55,18 +55,18 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.deleteById(id);
     }
 
-//    public void createOrder(List<String> productsNames, List<Integer> amounts, String description, User user) {
-//        Order order = new Order();
-//        order.setWaiter(employeeService.getEmployeeById(user.getEmployee().getId()));
-//        order.setTime(new Date());
-//        order.getTime().setHours(order.getTime().getHours()+3);
-//        order.setPrice(0.0);
-//        order.setOrderComposition(new ArrayList<>());
-//        for (int i = 0; i < productsNames.size(); i++) {
-//            order = addProductInOrder(order, productService.getProductByName(productsNames.get(i)), amounts.get(i));
-//        }
-//        order.setDescription(description);
-//        saveOrder(order);
-//    }
+    public void createOrder(List<String> productsNames, List<Integer> amounts, String description, User user) {
+        Order order = new Order();
+        order.setWaiter(employeeService.getEmployeeById(user.getEmployee().getId()));
+        order.setTime(new Date());
+        order.getTime().setHours(order.getTime().getHours()+3);
+        order.setPrice(0.0);
+        order.setOrderComposition(new ArrayList<>());
+        for (int i = 0; i < productsNames.size(); i++) {
+            order = addProductInOrder(order, productService.getProductByName(productsNames.get(i)), amounts.get(i));
+        }
+        order.setDescription(description);
+        saveOrder(order);
+    }
 }
 

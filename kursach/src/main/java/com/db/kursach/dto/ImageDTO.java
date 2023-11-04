@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 @Getter
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PositionDTO {
-    Long id;
-    String name;
+public class ImageDTO {
+    String linkToImage;
 }

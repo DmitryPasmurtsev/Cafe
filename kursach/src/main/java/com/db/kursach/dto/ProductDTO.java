@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ProductDTO {
+    Long id;
     String name;
     Long amount;
     Integer calories;
