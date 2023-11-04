@@ -3,12 +3,12 @@ package com.db.kursach.controllers;
 
 
 import com.db.kursach.dto.order.OrderResponse;
+import com.db.kursach.mapper.OrderResponseMapper;
 import com.db.kursach.models.Order;
 import com.db.kursach.dto.order.OrderRequest;
 import com.db.kursach.services.OrderService;
 //import com.db.kursach.services.impl.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,20 +23,20 @@ import java.util.stream.Collectors;
 public class OrderController {
 
     private final OrderService orderService;
-    private final ModelMapper modelMapper;
+    private final OrderResponseMapper orderResponseMapper;
     //private final AuthServiceImpl authService;
 
     @GetMapping("/orders")
     public ResponseEntity<List<OrderResponse>> orders(){
         List<Order> listOrders = orderService.listOrders();
         listOrders.sort(Comparator.comparing(Order::getTime).reversed());
-        List<OrderResponse> orderDTOS=listOrders.stream().map(order -> modelMapper.map(order, OrderResponse.class))
+        List<OrderResponse> orderDTOS=listOrders.stream().map(orderResponseMapper::map)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(orderDTOS);
     }
     @GetMapping("/orders/{id}")
     public ResponseEntity<OrderResponse> orderInfo(@PathVariable Long id){
-        OrderResponse orderDTO=modelMapper.map(orderService.getOrderById(id), OrderResponse.class);
+        OrderResponse orderDTO=orderResponseMapper.map(orderService.getOrderById(id));
         return ResponseEntity.ok(orderDTO);
     }
     @PostMapping("/orders")

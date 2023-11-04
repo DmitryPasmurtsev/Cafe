@@ -1,4 +1,5 @@
 package com.db.kursach.services.impl;
+import com.db.kursach.exceptions.NotCreatedException;
 import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.Supplier;
 import com.db.kursach.repositories.SupplierRepository;
@@ -26,6 +27,9 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierRepository.findById(id).get();
     }
     public void saveSupplier(Supplier supplier) {
+        if (supplierRepository.findByName(supplier.getName())!=null){
+            throw new NotCreatedException("Поставщик с таким названием уже существует");
+        }
         supplierRepository.save(supplier);
     }
     public void deleteSupplier(Long id){

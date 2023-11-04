@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,9 +18,17 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderCompRepository orderCompRepository;
-    private final EmployeeServiceImpl employeeService;
 
-    private final ProductServiceImpl productService;
+    public List<Product> products(Order order){
+        List<Product> products = new ArrayList<>();
+        List<OrderComposition> orderCompositions = order.getOrderComposition();
+        for (OrderComposition composition : orderCompositions) {
+
+            Product product = composition.getId().getProduct();
+            products.add(product);
+        }
+        return products;
+    }
 
     public List<Order> listOrders(){
         return orderRepository.findAll();

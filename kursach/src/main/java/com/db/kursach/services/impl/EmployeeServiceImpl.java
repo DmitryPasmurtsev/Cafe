@@ -33,6 +33,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if(employeeRepository.findByEmail(employee.getEmail())!=null){
             throw new NotCreatedException("Работник с такой почтой уже существует");
         }
+        if(employeeRepository.findByPhone(employee.getPhone())!=null){
+            throw new NotCreatedException("Работник с таким номером телефона уже существует");
+        }
         employeeRepository.save(employee);
     }
     public void saveImage(MultipartFile file,Long id) throws IOException {

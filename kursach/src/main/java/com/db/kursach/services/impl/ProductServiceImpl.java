@@ -1,5 +1,6 @@
 package com.db.kursach.services.impl;
 
+import com.db.kursach.exceptions.NotCreatedException;
 import com.db.kursach.exceptions.NotFoundException;
 import com.db.kursach.models.Product;
 import com.db.kursach.repositories.ProductRepository;
@@ -25,6 +26,9 @@ public class ProductServiceImpl implements ProductService {
     public Product getProductByName(String productName) {return productRepository.getProductByName(productName);}
 
     public void saveProduct(Product product) {
+        if (productRepository.getProductByName(product.getName())!=null){
+            throw new NotCreatedException("Продукт с таким названием уже существует");
+        }
         productRepository.save(product);
     }
     public void deleteProduct(Long id){
