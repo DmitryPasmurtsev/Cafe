@@ -25,7 +25,7 @@ public class OrderResponseMapper {
         return response;
 
     }
-    public List<OrderProduct> products(Order order) {
+    private List<OrderProduct> products(Order order) {
         List<OrderProduct> products = new ArrayList<>();
         List<OrderComposition> orderCompositions = order.getOrderComposition();
         for (OrderComposition composition : orderCompositions) {

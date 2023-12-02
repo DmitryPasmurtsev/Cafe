@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
 
     public void saveProduct(Product product) {
         if (productRepository.getProductByName(product.getName())!=null){
-            throw new NotCreatedException("Продукт с таким названием уже существует");
+            throw new NotCreatedException("Продукт с таким названием уже существует","name");
         }
         productRepository.save(product);
     }
@@ -37,6 +38,8 @@ public class ProductServiceImpl implements ProductService {
     public void editProduct(Long id,Product product){
         if (productRepository.findById(id).isEmpty())
             throw new NotFoundException("Продукт отсутствует");
+        if(productRepository.getProductByName(product.getName())!=null&& !Objects.equals(productRepository.getProductByName(product.getName()).getId(), id))
+            throw new NotCreatedException("Продукт с таким названием уже существует","name");
         Product productToEdit=productRepository.findById(id).get();
         editingProduct(product,productToEdit);
         productRepository.save(productToEdit);

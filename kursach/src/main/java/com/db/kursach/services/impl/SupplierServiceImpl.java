@@ -28,7 +28,7 @@ public class SupplierServiceImpl implements SupplierService {
     }
     public void saveSupplier(Supplier supplier) {
         if (supplierRepository.findByName(supplier.getName())!=null){
-            throw new NotCreatedException("Поставщик с таким названием уже существует");
+            throw new NotCreatedException("Поставщик с таким названием уже существует","name");
         }
         supplierRepository.save(supplier);
     }
@@ -38,6 +38,8 @@ public class SupplierServiceImpl implements SupplierService {
     public void editSupplier(Long id, Supplier supplier){
         if (supplierRepository.findById(id).isEmpty())
             throw new NotFoundException("Поставщик отсутствует");
+        if(supplierRepository.findByName(supplier.getName())!=null&& !Objects.equals(supplierRepository.findByName(supplier.getName()).getId(), id))
+            throw new NotCreatedException("Поставщик с таким названием уже существует","name");
         Supplier supplierToEdit=supplierRepository.findById(id).get();
         editingSupplier(supplier,supplierToEdit);
         supplierRepository.save(Objects.requireNonNull(supplierRepository.findById(id).orElse(null)));

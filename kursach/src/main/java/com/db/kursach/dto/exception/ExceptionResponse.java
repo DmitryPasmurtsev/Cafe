@@ -1,9 +1,6 @@
 package com.db.kursach.dto.exception;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 
@@ -14,4 +11,10 @@ import org.springframework.http.HttpStatus;
 public class ExceptionResponse {
     final HttpStatus status;
     final String message;
+    String field;
+
+    public ExceptionResponse(HttpStatus httpStatus, String message) {
+        this.message=message;
+        this.status=httpStatus;
+    }
 }

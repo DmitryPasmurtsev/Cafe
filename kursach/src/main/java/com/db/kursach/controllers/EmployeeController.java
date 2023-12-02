@@ -52,11 +52,7 @@ public class EmployeeController {
         employeeService.saveEmployee(employee);
         return ResponseEntity.ok("Добавлен работник " + employee.getFullName());
     }
-   /* @PostMapping("/employee/{id}/trash") //переименовать
-    public String createImage(@RequestParam("file") MultipartFile file,@PathVariable Long id)throws IOException{
-        employeeService.saveImage(file,id);
-        return "redirect:/employee/{id}";
-    } //вопросы начинаются с самого названия метода)))*/
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long id){
         employeeService.deleteEmployee(id);

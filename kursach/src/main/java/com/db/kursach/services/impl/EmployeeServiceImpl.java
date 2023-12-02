@@ -35,10 +35,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public void saveEmployee(Employee employee) {
         if(employeeRepository.findByEmail(employee.getEmail())!=null){
-            throw new NotCreatedException("Работник с такой почтой уже существует");
+            throw new NotCreatedException("Работник с такой почтой уже существует","email");
         }
         if (employeeRepository.findByPhone(employee.getPhone())!=null){
-            throw new NotCreatedException("Работник с таким номером телефона уже существует");
+            throw new NotCreatedException("Работник с таким номером телефона уже существует","phone");
         }
         sendEmail(employee.getFullName(), employee.getEmail());
         employeeRepository.save(employee);
@@ -65,6 +65,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void editEmployee(Long id, Employee employee){
         if (employeeRepository.findById(id).isEmpty())
             throw new NotFoundException("Работник с id = " +id +" отсутствует");
+        if(employeeRepository.findByPhone(employee.getPhone())!=null&& !Objects.equals(employeeRepository.findByPhone(employee.getPhone()).getId(), id))
+            throw new NotCreatedException("Работник с таким номером уже существует","phone");
+        if(employeeRepository.findByEmail(employee.getEmail())!=null&& !Objects.equals(employeeRepository.findByEmail(employee.getEmail()).getId(), id))
+            throw new NotCreatedException("Работник с такой почтой уже существует","email");
         Employee employeeToEdit=employeeRepository.findById(id).get();
         editingEmployee(employee,employeeToEdit);
         //if (employeeToEdit.getUser()!=null) employeeToEdit.setUser(authService.setUserRole(employeeToEdit, employeeToEdit.getUser()));

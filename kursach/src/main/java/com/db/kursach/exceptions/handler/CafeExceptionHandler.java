@@ -23,7 +23,7 @@ public class CafeExceptionHandler {
     public ResponseEntity<Object> handleNotCreatedException(NotCreatedException notCreatedException){
         ExceptionResponse response=
                 new ExceptionResponse( HttpStatus.BAD_REQUEST,
-                        notCreatedException.getMessage()
+                        notCreatedException.getMessage(),notCreatedException.getField()
                 );
         return new ResponseEntity<>(response,response.getStatus());
     }
