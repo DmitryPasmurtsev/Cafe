@@ -40,9 +40,9 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeRepository.findByPhone(employee.getPhone())!=null){
             throw new NotCreatedException("Работник с таким номером телефона уже существует","phone");
         }
-        sendEmail(employee.getFullName(), employee.getEmail());
+        Thread thread = new Thread(() -> sendEmail(employee.getFullName(), employee.getEmail()));
+        thread.start();
         employeeRepository.save(employee);
-
     }
 
     private void sendEmail(String employeeFullName, String employeeEmail) {
